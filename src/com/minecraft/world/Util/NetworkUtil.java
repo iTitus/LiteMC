@@ -17,54 +17,59 @@ import com.minecraft.world.World;
  */
 public class NetworkUtil {
         public static void loadChunk(Chunk chunk,World world,int x,int z){
-         int[] regPosition = PositionUtil.getChunkRegion(x, z);
-            Region reg = world.getDimension().get(regPosition[0], regPosition[1]);
-            if(chunk == null){
-                if(reg == null)return;
-                reg.unloadChunks(x, z);
-                return;
-            }
+                int[] regPosition = PositionUtil.getChunkRegion(x, z);
+                Region reg = world.getDimension().get(regPosition[0], regPosition[1]);
+                if(chunk == null){
+                        if(reg == null)return;
+                        reg.unloadChunks(x, z);
+                        return;
+                }
            
-            if(reg == null){
-                reg = new Region(regPosition[0], regPosition[1],world.getDimension());
-               world.getDimension().loadRegion(reg);
-           }
+                if(reg == null){
+                        reg = new Region(regPosition[0], regPosition[1],world.getDimension());
+                        world.getDimension().loadRegion(reg);
+                }
           
-           reg.loadChunks(chunk); 
-    }
-       public static Chunk consturctChunk(World world ,int x,int z,boolean fullChunk,byte[] biomeData,ch.spacebase.mc.protocol.data.game.Chunk[] sections){
-       Chunk chunk;
-       int[] regionPos = PositionUtil.getChunkRegion(x, z);
-       Region region   = world.getDimension().get(regionPos[0], regionPos[1]);
-       if(fullChunk||region == null||region.get(x, z) == null)chunk = new Chunk(x, z);
-       else chunk = region.get(x, z);
+                reg.loadChunks(chunk);
+                
+        }
+        
+        public static Chunk constructChunk(World world, int x, int z, boolean fullChunk, byte[] biomeData, ch.spacebase.mc.protocol.data.game.Chunk[] sections){
+                Chunk chunk;
+                int[] regionPos = PositionUtil.getChunkRegion(x, z);
+                Region region   = world.getDimension().get(regionPos[0], regionPos[1]);
+                if(fullChunk||region == null||region.get(x, z) == null)chunk = new Chunk(x, z);
+                else chunk = region.get(x, z);
        
-       boolean load = false;
-       Section current;
-       int y = 0;
-       while(y < 16){
-           if((current = construktSection(y, sections[y++])) == null)continue;
-           load = true;
-           chunk.unload(y);
-           if(!current.isEmpty())chunk.load(current);
+                boolean load = false;
+                Section current;
+                int y = 0;
+                while(y < 16){
+                        if((current = construktSection(y, sections[y++])) == null)
+                                continue;
+                        load = true;
+                        chunk.unload(y);
+                        if(!current.isEmpty())
+                                chunk.load(current);
+                }
+                if(load == false)
+                        return null;
+                if(fullChunk){
+                        x = 0;
+                        z = 0;
+                        while(z < 16){
+                                while(x < 16){
+                                        chunk.setBiomeID(x, z, biomeData[z*16+x]);
+                                        x++;
+                                }
+                        z++;
+                }
+                }
+                return chunk;
            
-       }
-       if(load == false)return null;
-       if(fullChunk){
-       x = 0;
-       z = 0;
-       while(z < 16){
-           while(x < 16){
-               chunk.setBiomeID(x, z, biomeData[z*16+x]);
-               x++;
-           }
-           z++;
-       }
-       }
-       return chunk;
-           
-    }
-   public static Section construktSection(int y,ch.spacebase.mc.protocol.data.game.Chunk data){
+        }
+        
+        public static Section construktSection(int y,ch.spacebase.mc.protocol.data.game.Chunk data){
        if(data == null)return null;
        Section section = new Section(y);
        if(data.isEmpty())return section;
