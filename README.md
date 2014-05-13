@@ -1,21 +1,21 @@
 LiteMC
 ======
 
-A rewrite of Minecraft based on the jMonkeyengine with increased performance better lightning and much more.
+A rewrite of Minecraft based on the jMonkeyengine with increased performance, better lightning and much more.
 
 Changelog
 ==========
 0.0.2:
 ------
--World loading
+- World loading
 
--Basic Networksystem
+- Basic Networksystem
 
--Ram efficiency increased (Block ID;Metadata;BiomeID)
-
+- RAM efficiency increased (Block ID, Metadata, BiomeID)
+ 
 
 0.0.1:
 -----
--World managing
+- World managing
 
--Content managing
+- Content managing
