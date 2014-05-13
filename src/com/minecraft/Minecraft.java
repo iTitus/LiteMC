@@ -41,6 +41,7 @@ import java.util.logging.Logger;
 public class Minecraft extends SimpleApplication {
     public static final String USERNAME = "MCUSER";
     public static final String PASSWORD = "MCPASSWD";
+    
     public static void main(String[] args) {
         Minecraft mc = new Minecraft();
         mc.start();
@@ -48,15 +49,17 @@ public class Minecraft extends SimpleApplication {
   
     @Override
     public void simpleInitApp() {
+        
         flyCam.setMoveSpeed(2);    /** Translucent/transparent cube. Uses Texture from jme3-test-data library! */
+        ContentManager.getInstance().setAssetManager(assetManager);
+        ContentManager.getInstance().setMinecraft(this);
+        Block.assetManager = assetManager;
+        ContentManager.getInstance().registerContent(new Vanilla());
+        
+        //TODO: Modloading
+       
+       ContentManager.getInstance().init();
 
-                ContentManager.getInstance().setAssetManager(assetManager);
-                ContentManager.getInstance().setMinecraft(this);
-                Block.assetManager = assetManager;
-                ContentManager.getInstance().registerContent(new Vanilla());
-                //TODO: Modloading
-                ContentManager.getInstance().init();
-             ;
     }
  
     @Override
@@ -70,7 +73,8 @@ public class Minecraft extends SimpleApplication {
     }
     private Server server;
     public World getWorld(){
-        if(server != null)return server.getWorld();
+        if(server != null)
+            return server.getWorld();
         return null;
     }
 }
