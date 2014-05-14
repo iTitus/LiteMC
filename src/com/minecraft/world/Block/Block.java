@@ -57,11 +57,11 @@ public abstract class Block extends Geometry {
     
     //public final void setX(int x) {
     //    getLocalTranslation().setX(x);
-    // }
+    //}
     //
     // public final void setY(int y) {
     //     getLocalTranslation().setY(y);
-    // }
+    //}
     //
     // public final void setZ(int z) {
     //     getLocalTranslation().setZ(z);
