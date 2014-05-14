@@ -15,19 +15,21 @@ import com.jme3.texture.Texture;
  *
  * @author Pascal
  */
-public class Glass extends Block{
+public class Glass extends Block {
+
     public static Texture glassTexture;
-    public Glass(){
-        super((short)20,glassTexture);
-        Material tmp = getMaterial();
+
+    public Glass() {
+        super((short)20, glassTexture);
+        Material glass = getMaterial();
         this.setQueueBucket(Bucket.Transparent);
-        tmp.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
-        setMaterial(tmp);
-      
+        glass.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+        setMaterial(glass);
     }
+
     @Override
     public void renderEffects(RenderManager renderManager) {
-        
+        //NO-OP
     }
     
 }
