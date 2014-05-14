@@ -10,14 +10,14 @@ import com.jme3.math.Vector3f;
 
 /**
  *
- * @author pascal
+ * @author Pascal
  */
-public class Sun extends DirectionalLight{
+public class Sun extends DirectionalLight {
+
     public Sun(){
         setDirection((new Vector3f(-0.5f, -0.5f, -0.5f)).normalizeLocal());
         setColor(ColorRGBA.White.set(1.6f, 1.6f, 1f, 0f));
         this.setName("Sun");
-      
-  
     }
+
 }
