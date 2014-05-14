@@ -12,5 +12,7 @@ import ch.spacebase.packetlib.packet.Packet;
  * @author pascal
  */
 public interface PacketHandler {
-    public void handle(Packet packet,Server server);
+
+    public void handle(Packet packet, Server server);
+
 }
