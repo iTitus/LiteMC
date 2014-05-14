@@ -15,23 +15,21 @@ import com.minecraft.world.Block.Glass;
  *
  * @author Pascal
  */
-public class Vanilla implements Content{
+public class Vanilla implements Content {
 
-    
-
-    public void PreInit(ContentManager manager, Config cfg) {
+    public void preInit(ContentManager manager, Config cfg) {
         this.initTextures(manager.getAssetManager());
-
     }
-     public void initTextures(AssetManager assetManagere){
+
+    public void initTextures(AssetManager assetManagere){
         Glass.glassTexture = assetManagere.loadTexture("Textures/Blocks/glass.png");
     }
      
-
-    public void Init(ContentManager manager) {
+    public void init(ContentManager manager) {
         initBlocks(manager.getBlockManager());
         initPackets(manager.getPacketManager());
     }
+
     public void initBlocks(BlockManager blockManager){
         blockManager.register((short)20, Glass.class);
     }
@@ -40,9 +38,12 @@ public class Vanilla implements Content{
         
     }
     
+    public void postInit(ContentManager manager) {
 
-    public void PostInit(ContentManager manager) {}
+    }
 
-    public String getName() {return "Vanilla";}
+    public String getName() {
+        return "Vanilla";
+    }
     
 }
