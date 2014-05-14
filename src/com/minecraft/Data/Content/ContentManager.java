@@ -19,15 +19,16 @@ import java.util.ArrayList;
  * @author Pascal
  */
 public class ContentManager {
+
     private static final ContentManager instance = new ContentManager();
+
     public static ContentManager getInstance(){
         return instance;
     }
     
     private ArrayList<Content> content = new ArrayList<Content>();
-        private boolean initialized = false;
-    
-    
+
+    private boolean initialized = false;
     
     private BlockManager  blockManager ;
     private PacketManager packetManager;
@@ -36,35 +37,36 @@ public class ContentManager {
     private Minecraft minecraft;
     
     
-    private ContentManager(){
+    private ContentManager() {
         
-        this.blockManager  = new BlockManager() ;
+        this.blockManager  = new BlockManager();
         this.packetManager = new PacketManager();
        
     }
     
-    public void registerContent(Content content){
-        if(initialized)throw new IllegalAccessError("Content must be started before Content is initialized");
+    public void registerContent(Content content) {
+        if(initialized)
+            throw new IllegalAccessError("Content must be started before Content is initialized");
         this.content.add(content);
     }
-      public Content getContent(String name){
+
+    public Content getContent(String name) {
         int i = 0;
         while(i < content.size()){
             if(content.get(i).getName().equals(name))return content.get(i);
-            i++;
-            
+            i++;    
         }
         return null;
     }
       
-          public void init(){
+    public void init(){
         initialized = true;
         int i = 0;
-         while(i < content.size()){
+        while(i < content.size()){
             content.get(i).PreInit(this,new Config(new File("")));
             i++;
         }
-         while(i < content.size()){
+        while(i < content.size()){
             content.get(i).Init(this);
             i++;
         }
@@ -72,32 +74,30 @@ public class ContentManager {
             content.get(i).PostInit(this);
             i++;
         }
-    }
-          
-          
+    }       
           
     public Minecraft getMinecraft(){
         return minecraft;
     }       
-            
-            
+                    
     public BlockManager getBlockManager(){
         return blockManager;
     }
+
     public AssetManager getAssetManager(){
         return assetManager;
     }
+
     public PacketManager getPacketManager(){
         return packetManager;
     }
     
-    
     public void setAssetManager(AssetManager assetManager){
         this.assetManager = assetManager;
     }
+
     public void setMinecraft(Minecraft minecraft){
         this.minecraft = minecraft;
     }
-
   
 }
