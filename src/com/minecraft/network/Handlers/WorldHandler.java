@@ -30,11 +30,11 @@ import java.util.logging.Logger;
  *
  * @author pascal
  */
-public class WorldHandler  implements PacketHandler{
+public class WorldHandler implements PacketHandler {
 
     public void handle(Packet packet, Server server) {
-        
-           if(packet instanceof ServerMultiChunkDataPacket){
+
+        if(packet instanceof ServerMultiChunkDataPacket) {
             ServerMultiChunkDataPacket p = (ServerMultiChunkDataPacket) packet;
             int i = 0;
             Chunk current;
@@ -43,34 +43,33 @@ public class WorldHandler  implements PacketHandler{
                 NetworkUtil.loadChunk(current, server.getWorld(), p.getX(i), p.getZ(i));
             }
             return;
-
         }
-        if(packet instanceof ServerChunkDataPacket){
+
+        if(packet instanceof ServerChunkDataPacket) {
             ServerChunkDataPacket p = (ServerChunkDataPacket) packet;
             Chunk chunk = NetworkUtil.constructChunk(server.getWorld(), p.getX(), p.getZ(), p.isFullChunk(),p.getBiomeData(),p.getChunks());  
             NetworkUtil.loadChunk(chunk, server.getWorld(), p.getX(), p.getZ());
             return;
         }
+
         if(packet instanceof ServerMultiBlockChangePacket){
             ServerMultiBlockChangePacket p = (ServerMultiBlockChangePacket) packet;
             int i = 0;
             Block current;
-            for(BlockChangeRecord record:p.getRecords()){
-                try{
-                     current = ContentManager.getInstance().getBlockManager().createBlock((short)record.getId());
-                     current.setMetadata((byte) record.getMetadata());
-                     server.getWorld().getDimension().setBlock(current, record.getX(),record.getY(), record.getZ());
-                }catch(Exception ex){
+            for(BlockChangeRecord record : p.getRecords()){
+                try {
+                    current = ContentManager.getInstance().getBlockManager().createBlock((short)record.getId());
+                    current.setMetadata((byte) record.getMetadata());
+                    server.getWorld().getDimension().setBlock(current, record.getX(),record.getY(), record.getZ());
+                } catch(Exception ex) {
                     ex.printStackTrace();
                 }
             }
              return;
-            }
-
+        }
         
-        if(packet instanceof ServerBlockChangePacket){
-                      ServerBlockChangePacket p = (ServerBlockChangePacket) packet;
-
+        if(packet instanceof ServerBlockChangePacket) {
+            ServerBlockChangePacket p = (ServerBlockChangePacket) packet;
             try {
                 Block block = ContentManager.getInstance().getBlockManager().createBlock((short)p.getRecord().getId());
                 block.setMetadata((byte)p.getRecord().getMetadata());
@@ -80,11 +79,11 @@ public class WorldHandler  implements PacketHandler{
             }
             return;
         }
+
         if(packet instanceof ServerBlockValuePacket){
             ServerBlockValuePacket p = (ServerBlockValuePacket) packet;
            //TODO: MOJANG IS STUPID;
         }
-       
  
     }
 
