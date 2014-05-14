@@ -39,7 +39,7 @@ public class WorldHandler implements PacketHandler {
             int i = 0;
             Chunk current;
             while(i < p.getColumns()){
-                current = NetworkUtil.constructChunk(server.getWorld(), p.getX(i), p.getZ(i),true,p.getBiomeData(i),p.getChunks(i));  
+                current = NetworkUtil.constructChunk(server.getWorld(), p.getX(i), p.getZ(i), true, p.getBiomeData(i), p.getChunks(i));  
                 NetworkUtil.loadChunk(current, server.getWorld(), p.getX(i), p.getZ(i));
             }
             return;
@@ -47,7 +47,7 @@ public class WorldHandler implements PacketHandler {
 
         if(packet instanceof ServerChunkDataPacket) {
             ServerChunkDataPacket p = (ServerChunkDataPacket) packet;
-            Chunk chunk = NetworkUtil.constructChunk(server.getWorld(), p.getX(), p.getZ(), p.isFullChunk(),p.getBiomeData(),p.getChunks());  
+            Chunk chunk = NetworkUtil.constructChunk(server.getWorld(), p.getX(), p.getZ(), p.isFullChunk(), p.getBiomeData(), p.getChunks());  
             NetworkUtil.loadChunk(chunk, server.getWorld(), p.getX(), p.getZ());
             return;
         }
@@ -60,7 +60,7 @@ public class WorldHandler implements PacketHandler {
                 try {
                     current = ContentManager.getInstance().getBlockManager().createBlock((short)record.getId());
                     current.setMetadata((byte) record.getMetadata());
-                    server.getWorld().getDimension().setBlock(current, record.getX(),record.getY(), record.getZ());
+                    server.getWorld().getDimension().setBlock(current, record.getX(), record.getY(), record.getZ());
                 } catch(Exception ex) {
                     ex.printStackTrace();
                 }
@@ -73,7 +73,7 @@ public class WorldHandler implements PacketHandler {
             try {
                 Block block = ContentManager.getInstance().getBlockManager().createBlock((short)p.getRecord().getId());
                 block.setMetadata((byte)p.getRecord().getMetadata());
-                server.getWorld().getDimension().setBlock(block, p.getRecord().getX(),p.getRecord().getY(), p.getRecord().getZ());
+                server.getWorld().getDimension().setBlock(block, p.getRecord().getX(), p.getRecord().getY(), p.getRecord().getZ());
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
