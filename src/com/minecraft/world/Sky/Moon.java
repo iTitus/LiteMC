@@ -10,14 +10,14 @@ import com.jme3.math.Vector3f;
 
 /**
  *
- * @author pascal
+ * @author Pascal
  */
-public class Moon extends DirectionalLight{
-    public Moon(){
+public class Moon extends DirectionalLight {
+
+    public Moon() {
         setDirection((new Vector3f(-0.5f, -0.5f, -0.5f)).normalizeLocal());
         setColor(ColorRGBA.White.set(0.6f, 0.6f, 0.8f, 0f));
         this.setName("Moon");
-      
-  
     }
+
 }
