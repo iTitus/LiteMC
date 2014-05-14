@@ -17,27 +17,35 @@ import java.util.logging.Logger;
  * @author Pascal
  */
 public class Config {
+
     private File file;
     private Properties props;
     private String des = null;
+
     public Config(File file){
         this.file = file;
         props = new Properties();
         
     }
-      public Config(File file,String des){
+
+    public Config(File file,String des){
         this(file);
         this.des = des;
-        if(file.exists())try {
-            load();
-        } catch (IOException ex) {
-        }
+        if(file.exists())
+            try {
+                load();
+            } catch (IOException ex) {
+
+            }
         
     }
+
     public void load()throws IOException{
         props.load(new FileInputStream(file));
     }
+
     public void save()throws IOException{
         props.store(new FileOutputStream(file), des);
     }
+
 }
