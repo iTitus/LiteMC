@@ -37,12 +37,10 @@ public abstract class Block extends Geometry {
         this.texture = texture;
         data = (char)(id<<4);
         setMetadata(metadata);
-    
     }
     
     public Block(short id,Texture texture) {
         this(id, (byte)0, texture);
-    
     }
 
     public final void setBiomeID(byte biomeID){
