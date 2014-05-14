@@ -28,80 +28,85 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author pascal
+ * @author Pascal
  */
-public class Server extends SessionAdapter{
-     private static MinecraftProtocol protocol;
-     private World world;
-    static{
+public class Server extends SessionAdapter {
+
+    private static MinecraftProtocol protocol;
+    private World world;
+    
+    static {
         try {
-            protocol = new MinecraftProtocol(Minecraft.USERNAME,Minecraft.PASSWORD,false);
+            protocol = new MinecraftProtocol(Minecraft.USERNAME, Minecraft.PASSWORD, false);
         } catch (AuthenticationException ex) {
-            JOptionPane.showMessageDialog(null, "Username - Password combination is wrong", "Login-Failed",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Username - Password combination is wrong", "Login-Failed", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
     }
     
-    
     private String host;
     private int    port;
     private Client client;
+
     public Server(String host,int port){
         this.host = host;
         this.port = port;
         client = new Client(host, port, protocol, new TcpSessionFactory());
         client.getSession().addListener(this);
     }
+
     public void connect(){
         client.getSession().connect();
     }
-     public void disconnect(String reason){
+
+    public void disconnect(String reason){
        client.getSession().disconnect(reason);
-         world = null;
+       world = null;
     }
+
     public void send(Packet packet){
         client.getSession().send(packet);
     }
+
     public World getWorld(){
         return world;
     }
     
-    
-    
-    
-    
     @Override
     public void packetReceived(PacketReceivedEvent e) {
-         //KeepAlive
+
        if(e.getPacket() instanceof ServerKeepAlivePacket){
            send(new ServerKeepAlivePacket(((ClientKeepAlivePacket)e.getPacket()).getPingId()));
            return;
        }
+
        if(e.getPacket() instanceof ServerJoinGamePacket){
-            ServerJoinGamePacket p = (ServerJoinGamePacket) e.getPacket();
-            world = new World(p.getHardcore());
-            getWorld().loadDimension(new Dimension(p.getDimension()));
-            //TODO: Gamemode
+           ServerJoinGamePacket p = (ServerJoinGamePacket) e.getPacket();
+           world = new World(p.getHardcore());
+           getWorld().loadDimension(new Dimension(p.getDimension()));
+           //TODO: Gamemode
            return;
        }
     }
-    @Override
 
+    @Override
     public void packetSent(PacketSentEvent e) {
-    }
-    @Override
 
+    }
+
+    @Override
     public void connected(ConnectedEvent e) {
-    }
-    @Override
 
+    }
+
+    @Override
     public void disconnecting(DisconnectingEvent e) {
         
     }
+
     @Override
     public void disconnected(DisconnectedEvent e) {
+
     }
-    
-    
    
 }
