@@ -39,8 +39,10 @@ import java.util.logging.Logger;
  * @author normenhansen
  */
 public class Minecraft extends SimpleApplication {
+
     public static final String USERNAME = "MCUSER";
     public static final String PASSWORD = "MCPASSWD";
+    private Server server;
     
     public static void main(String[] args) {
         Minecraft mc = new Minecraft();
@@ -58,7 +60,7 @@ public class Minecraft extends SimpleApplication {
         
         //TODO: Modloading
        
-       ContentManager.getInstance().init();
+        ContentManager.getInstance().init();
 
     }
  
@@ -71,10 +73,12 @@ public class Minecraft extends SimpleApplication {
     public void simpleRender(RenderManager rm) {
         
     }
-    private Server server;
+
+
     public World getWorld(){
         if(server != null)
             return server.getWorld();
         return null;
     }
+
 }
