@@ -16,7 +16,9 @@ import com.minecraft.world.World;
  * @author pascal
  */
 public class NetworkUtil {
-        public static void loadChunk(Chunk chunk,World world,int x,int z){
+
+        public static void loadChunk(Chunk chunk, World world, int x, int z) {
+
                 int[] regPosition = PositionUtil.getChunkRegion(x, z);
                 Region reg = world.getDimension().get(regPosition[0], regPosition[1]);
                 if(chunk == null){
@@ -34,7 +36,8 @@ public class NetworkUtil {
                 
         }
         
-        public static Chunk constructChunk(World world, int x, int z, boolean fullChunk, byte[] biomeData, ch.spacebase.mc.protocol.data.game.Chunk[] sections){
+        public static Chunk constructChunk(World world, int x, int z, boolean fullChunk, byte[] biomeData, ch.spacebase.mc.protocol.data.game.Chunk[] sections) {
+
                 Chunk chunk;
                 int[] regionPos = PositionUtil.getChunkRegion(x, z);
                 Region region   = world.getDimension().get(regionPos[0], regionPos[1]);
@@ -69,10 +72,12 @@ public class NetworkUtil {
            
         }
         
-        public static Section construktSection(int y,ch.spacebase.mc.protocol.data.game.Chunk data){
-       if(data == null)return null;
-       Section section = new Section(y);
-       if(data.isEmpty())return section;
+        public static Section constructSection(int y, ch.spacebase.mc.protocol.data.game.Chunk data){
+            if(data == null)
+                return null;
+            Section section = new Section(y);
+            if(data.isEmpty())
+                return section;
             int x = 0;
             y = 0;
             int z = 0;
@@ -95,4 +100,5 @@ public class NetworkUtil {
             return section;
     
    }
+
 }
