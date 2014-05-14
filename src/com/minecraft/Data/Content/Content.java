@@ -12,12 +12,11 @@ import com.minecraft.Data.Config;
  */
 public interface Content {
 
-    public void PreInit(ContentManager manager,Config cfg);
+    public void PreInit(ContentManager manager, Config cfg);
     
-    public void Init(ContentManager manager );
+    public void Init(ContentManager manager);
     
-    
-    public void PostInit(ContentManager manager );
+    public void PostInit(ContentManager manager);
     
     public String getName();
 
